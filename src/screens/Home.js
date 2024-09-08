@@ -1,4 +1,5 @@
 import {
+  Alert,
   Dimensions,
   Modal,
   Pressable,
@@ -8,12 +9,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Background, Gap} from '../components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {BarChart} from 'react-native-chart-kit';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import ApiRequest from '../api/ApiRequest';
+import axios from 'axios';
 
-export default function Home({navigation}) {
+export default function Home({navigation, route}) {
+  const token = route.params.token;
   const data = [
     {
       in: ' ',
@@ -202,10 +207,48 @@ export default function Home({navigation}) {
       isReturn: false,
     },
   ];
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const submitLogout = async _id => {
+    Alert.alert('Keluar?', 'Sesi anda akan berakhir', [
+      {
+        text: 'Keluar',
+        onPress: async () => {
+          try {
+            await EncryptedStorage.removeItem('credentials');
+            navigation.replace('Login');
+          } catch (error) {
+            navigation.replace('Login');
+          }
+        },
+      },
+      {
+        text: 'Batal',
+      },
+    ]);
+  };
+
+  const getUserDetail = async () => {
+    try {
+      const response = await ApiRequest(token).get('/user');
+      setName(response.data.user.name);
+      setEmail(response.data.user.email);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response.data);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getUserDetail();
+  }, []);
 
   const [modalVisible, setModalVisible] = useState(false);
   const closeModal = () => setModalVisible(false);
   const screenWidth = Dimensions.get('window').width;
+
   return (
     <View style={{flex: 1}}>
       <Background />
@@ -215,7 +258,7 @@ export default function Home({navigation}) {
       <View style={{margin: 20, flexDirection: 'row', alignItems: 'center'}}>
         <TouchableOpacity
           onPress={() => {
-            navigation.replace('Login');
+            submitLogout();
           }}>
           <Icon
             name={'exit-to-app'}
@@ -258,11 +301,11 @@ export default function Home({navigation}) {
             <Gap width={10} />
             <View style={{flex: 1, marh: 10}}>
               <Text style={{fontSize: 16, fontWeight: '700', color: 'black'}}>
-                Nama User
+                {name}
               </Text>
               <Gap height={5} />
               <Text style={{fontSize: 13, fontWeight: '400', color: 'black'}}>
-                Email@user.com
+                {email}
               </Text>
             </View>
           </View>

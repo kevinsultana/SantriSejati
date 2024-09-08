@@ -1,11 +1,45 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Background, Gap} from '../components';
 import FormInput from '../components/FormInput';
 import {useState} from 'react';
+import axios from 'axios';
+import ApiRequest from '../api/ApiRequest';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const submitLogin = async () => {
+    setLoading(true);
+    try {
+      const response = await ApiRequest().post('/login', {
+        email: email,
+        password: password,
+      });
+      setLoading(false);
+      await EncryptedStorage.setItem(
+        'credentials',
+        JSON.stringify({email: email, password: password}),
+      );
+      navigation.replace('Home', {token: response.data.token});
+    } catch (error) {
+      setLoading(false);
+      if (axios.isAxiosError(error)) {
+        Alert.alert('Gagal Login', error.response.data.message);
+      } else {
+        console.log('syntax submit login error:', error);
+      }
+    }
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -43,9 +77,13 @@ export default function Login({navigation}) {
 
             <Gap height={30} />
 
-            <TouchableOpacity onPress={() => navigation.replace('Home')}>
+            <TouchableOpacity onPress={() => submitLogin()}>
               <View style={styles.btnAction}>
-                <Text style={styles.textBtn}>Masuk</Text>
+                {loading ? (
+                  <ActivityIndicator size={'small'} color={'white'} />
+                ) : (
+                  <Text style={styles.textBtn}>Masuk</Text>
+                )}
               </View>
             </TouchableOpacity>
 

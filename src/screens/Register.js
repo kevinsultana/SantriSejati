@@ -1,12 +1,59 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {Background, Gap} from '../components';
 import FormInput from '../components/FormInput';
+import axios from 'axios';
+import ApiRequest from '../api/ApiRequest';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export default function Register({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [nama, setNama] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const submitRegister = async () => {
+    setLoading(true);
+    try {
+      const response = await ApiRequest().post('/register', {
+        name: nama,
+        email: email,
+        password: password,
+        gender: 'pria',
+        phone_number: Math.random(),
+        division: 2,
+        department: 24,
+        branch: 1,
+        position: 'staff',
+        device_model: Math.random(),
+      });
+      const responseLogin = await ApiRequest().post('/login', {
+        email: email,
+        password: password,
+      });
+      await EncryptedStorage.setItem(
+        'credentials',
+        JSON.stringify({email: email, password: password}),
+      );
+      navigation.replace('Home', {token: responseLogin.data.token});
+      Alert.alert('', 'Register Berhasil');
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      if (axios.isAxiosError(error)) {
+        console.log(error.response.data);
+      } else {
+        console.log(error);
+      }
+    }
+  };
   return (
     <View style={{flex: 1}}>
       <Background />
@@ -53,9 +100,13 @@ export default function Register({navigation}) {
 
             <Gap height={30} />
 
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => submitRegister()}>
               <View style={styles.btnAction}>
-                <Text style={styles.textBtn}>Daftar</Text>
+                {loading ? (
+                  <ActivityIndicator color={'white'} size={'small'} />
+                ) : (
+                  <Text style={styles.textBtn}>Daftar</Text>
+                )}
               </View>
             </TouchableOpacity>
 
