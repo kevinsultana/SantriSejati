@@ -55,7 +55,6 @@ export default function Yaumi({navigation, route}) {
     setLoading(true);
     try {
       const response = await ApiRequest(token).post('/yaumi', dataSelected);
-      console.log(response.data);
       Alert.alert('Berhasil', response.data.message);
       navigation.replace('Home', {token});
       setLoading(false);
