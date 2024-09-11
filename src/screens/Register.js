@@ -16,10 +16,15 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 export default function Register({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [nama, setNama] = useState('');
   const [loading, setLoading] = useState(false);
 
   const submitRegister = async () => {
+    if (password !== confirmPassword) {
+      Alert.alert('Registrasi Gagal', 'Passwords tidak sama.');
+      return;
+    }
     setLoading(true);
     try {
       const response = await ApiRequest().post('/register', {
@@ -94,6 +99,20 @@ export default function Register({navigation}) {
               value={password}
               onChangeText={password => {
                 setPassword(password);
+              }}
+              autoCapitalize={'none'}
+            />
+
+            <Gap height={30} />
+
+            <FormInput
+              title={'Password'}
+              iconName={'lock'}
+              placeholder={'Masukkan Konfirmasi Password...'}
+              password={true}
+              value={confirmPassword}
+              onChangeText={confirmPassword => {
+                setConfirmPassword(confirmPassword);
               }}
               autoCapitalize={'none'}
             />

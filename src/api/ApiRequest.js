@@ -5,7 +5,8 @@ const ApiRequest = token => {
     baseURL: 'https://dev.pondokdigital.pondokqu.id/api',
     headers: {
       Authorization: `bearer ${token}`,
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
   });
 };
