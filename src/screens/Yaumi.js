@@ -82,16 +82,18 @@ export default function Yaumi({navigation, route}) {
 
       {/* data */}
       <ScrollView>
-        {dataYaumi.map((item, index) => (
-          <View style={styles.viewYaumi} key={index}>
-            <CheckBox
-              onValueChange={value => setSelectedAmalan(index)}
-              value={item.checked === 1}
-            />
-            <Gap width={10} />
-            <Text style={styles.textYaumi}>{item.name}</Text>
-          </View>
-        ))}
+        <View style={{maxWidth: 520, alignSelf: 'center', width: '90%'}}>
+          {dataYaumi.map((item, index) => (
+            <View style={styles.viewYaumi} key={index}>
+              <CheckBox
+                onValueChange={value => setSelectedAmalan(index)}
+                value={item.checked === 1}
+              />
+              <Gap width={10} />
+              <Text style={styles.textYaumi}>{item.name}</Text>
+            </View>
+          ))}
+        </View>
       </ScrollView>
 
       {/* btn Action */}
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#7667AA',
     height: 50,
     width: 220,
-    bottom: 40,
+    bottom: 10,
     borderRadius: 25,
     elevation: 5,
   },

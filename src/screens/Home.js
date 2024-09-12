@@ -143,7 +143,7 @@ export default function Home({navigation, route}) {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, alignItems: 'center'}}>
       <Background />
       <Gap height={20} />
 
@@ -296,6 +296,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 20,
     overflow: 'hidden',
+    maxWidth: 520,
+    alignSelf: 'center',
+    maxHeight: 200,
   },
   viewMonth: {
     backgroundColor: '#e8e8e8',

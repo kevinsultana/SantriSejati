@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Alert,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -44,64 +45,68 @@ export default function Login({navigation}) {
   return (
     <View style={{flex: 1}}>
       <Background />
-      <View style={styles.viewContainer}>
-        <View>
-          <View style={styles.viewHeaderContainer}>
-            <Text style={styles.textLogin}>Login</Text>
+      <ScrollView>
+        <Gap height={30} />
+        <View style={styles.viewContainer}>
+          <View>
+            <View style={styles.viewHeaderContainer}>
+              <Text style={styles.textLogin}>Login</Text>
 
-            <Gap height={20} />
+              <Gap height={20} />
 
-            <FormInput
-              title={'Email'}
-              iconName={'gmail'}
-              placeholder={'Contoh@email.com'}
-              value={email}
-              onChangeText={email => setEmail(email)}
-              keyboardType={'email-address'}
-              autoCapitalize={'none'}
-            />
+              <FormInput
+                title={'Email'}
+                iconName={'gmail'}
+                placeholder={'Contoh@email.com'}
+                value={email}
+                onChangeText={email => setEmail(email)}
+                keyboardType={'email-address'}
+                autoCapitalize={'none'}
+              />
 
-            <Gap height={20} />
+              <Gap height={20} />
 
-            <FormInput
-              title={'Password'}
-              iconName={'lock'}
-              placeholder={'Masukkan Password...'}
-              password={true}
-              value={password}
-              onChangeText={password => {
-                setPassword(password);
-              }}
-              autoCapitalize={'none'}
-            />
+              <FormInput
+                title={'Password'}
+                iconName={'lock'}
+                placeholder={'Masukkan Password...'}
+                password={true}
+                value={password}
+                onChangeText={password => {
+                  setPassword(password);
+                }}
+                autoCapitalize={'none'}
+              />
 
-            <Gap height={30} />
+              <Gap height={30} />
 
-            <TouchableOpacity onPress={() => submitLogin()}>
-              <View style={styles.btnAction}>
-                {loading ? (
-                  <ActivityIndicator size={'small'} color={'white'} />
-                ) : (
-                  <Text style={styles.textBtn}>Masuk</Text>
-                )}
-              </View>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => submitLogin()}>
+                <View style={styles.btnAction}>
+                  {loading ? (
+                    <ActivityIndicator size={'small'} color={'white'} />
+                  ) : (
+                    <Text style={styles.textBtn}>Masuk</Text>
+                  )}
+                </View>
+              </TouchableOpacity>
 
-            <Gap height={10} />
+              <Gap height={10} />
 
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-              <View
-                style={{
-                  ...styles.btnAction,
-                  width: 180,
-                  backgroundColor: '#403F81',
-                }}>
-                <Text style={styles.textBtn}>Daftar</Text>
-              </View>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                <View
+                  style={{
+                    ...styles.btnAction,
+                    width: 180,
+                    backgroundColor: '#403F81',
+                  }}>
+                  <Text style={styles.textBtn}>Daftar</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+        <Gap height={30} />
+      </ScrollView>
     </View>
   );
 }

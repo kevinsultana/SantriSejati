@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Alert,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -62,8 +63,10 @@ export default function Register({navigation}) {
   return (
     <View style={{flex: 1}}>
       <Background />
-      <View style={styles.viewContainer}>
-        <View>
+      <ScrollView>
+        <Gap height={30} />
+        <View style={styles.viewContainer}>
+          {/* <View> */}
           <View style={styles.viewHeaderContainer}>
             <Text style={styles.textLogin}>Daftar</Text>
 
@@ -142,14 +145,20 @@ export default function Register({navigation}) {
               </View>
             </TouchableOpacity>
           </View>
+          {/* </View> */}
         </View>
-      </View>
+        <Gap height={30} />
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  textBtn: {color: 'white', fontSize: 17, fontWeight: '700'},
+  textBtn: {
+    color: 'white',
+    fontSize: 17,
+    fontWeight: '700',
+  },
   viewHeaderContainer: {
     width: 320,
     justifyContent: 'center',

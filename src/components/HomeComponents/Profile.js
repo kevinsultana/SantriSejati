@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   viewProfileNameContainer: {
     backgroundColor: 'white',
     height: 100,
-    width: 220,
+    width: '70%',
     borderBottomLeftRadius: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 10,
@@ -106,5 +106,7 @@ const styles = StyleSheet.create({
   viewProfileHeader: {
     marginHorizontal: 20,
     flexDirection: 'row',
+    maxWidth: 520,
+    alignSelf: 'center',
   },
 });

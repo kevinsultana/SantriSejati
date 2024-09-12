@@ -62,6 +62,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 20,
     borderRadius: 20,
+    maxWidth: 520,
+    // alignSelf: 'center',
+    // height: 300,
   },
   textMengisi: {
     color: 'white',
