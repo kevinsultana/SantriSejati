@@ -63,10 +63,9 @@ export default function Register({navigation}) {
   return (
     <View style={{flex: 1}}>
       <Background />
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.viewContainer}>
         <Gap height={30} />
-        <View style={styles.viewContainer}>
-          {/* <View> */}
+        <View>
           <View style={styles.viewHeaderContainer}>
             <Text style={styles.textLogin}>Daftar</Text>
 
@@ -145,7 +144,6 @@ export default function Register({navigation}) {
               </View>
             </TouchableOpacity>
           </View>
-          {/* </View> */}
         </View>
         <Gap height={30} />
       </ScrollView>
@@ -165,8 +163,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   viewContainer: {
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     flex: 1,
     alignSelf: 'center',
   },

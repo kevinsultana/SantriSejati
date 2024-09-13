@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
   viewCalenderDate: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
     marginTop: 10,
     marginHorizontal: 20,
   },
